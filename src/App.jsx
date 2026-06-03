@@ -9,11 +9,11 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-grow">
+    <div className="flex flex-col">
+      <main className="flex-grow ">
         <Home />
+        <Footer />
       </main>
-      <Footer />
     </div>
   );
 }

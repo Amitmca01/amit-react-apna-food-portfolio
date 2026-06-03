@@ -4,9 +4,11 @@ import { IoSearch } from "react-icons/io5";
 import { FiShoppingBag } from "react-icons/fi";
 import { dataContext } from "../context/UserContext";
 import food_items from "../food";
+import { useSelector } from "react-redux";
 
 const Nav = () => {
-  let { input, setInput, cate, setCate } = useContext(dataContext);
+  let { input, setInput, cate, setCate, showCart, setShowCart } =
+    useContext(dataContext);
   useEffect(() => {
     const newlist = food_items.filter((item) =>
       item.food_name.toLowerCase().includes(input.toLowerCase()),
@@ -14,6 +16,11 @@ const Nav = () => {
 
     setCate(newlist);
   }, [input]);
+
+  // store ke item ko access krne ke leye..
+  let items = useSelector((state) => state.cart);
+  console.log(items);
+
   return (
     <>
       <div className="w-full h-[100px] flex justify-between items-center px-8">
@@ -36,9 +43,14 @@ const Nav = () => {
           />
         </form>
 
-        <div className="w-[60px] h-[60px] p-5 bg-white flex justify-center items-center rounded-md shadow-xl relative">
+        <div
+          className="w-[60px] h-[60px] p-5 bg-white flex justify-center cursor-pointer items-center rounded-md shadow-xl relative"
+          onClick={() => {
+            setShowCart(true);
+          }}
+        >
           <span className="absolute top-1 right-3 text-orange-500 font-bold">
-            0
+            {items.length}
           </span>
           <FiShoppingBag className="w-[30px] h-[30px] text-orange-400" />
         </div>

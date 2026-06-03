@@ -4,10 +4,14 @@ import Categories from "../Category";
 import Card from "../components/Card";
 import food_items from "../food";
 import { dataContext } from "../context/UserContext";
+import { RxCross2 } from "react-icons/rx";
+import Card2 from "../components/Card2";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const { input } = useContext(dataContext);
-  let { cate, setCate } = useContext(dataContext);
+  let { cate, setCate, showCart, setShowCart } = useContext(dataContext);
+
   function filter(category) {
     if (category == "All") {
       setCate(food_items);
@@ -20,7 +24,7 @@ const Home = () => {
   }
 
   return (
-    <div className=" bg-slate-200 w-full  min-h-screen">
+    <div className="bg-slate-200 w-full min-h-screen flex flex-col gap-10 pb-10">
       {/* Navigation start */}
       <Nav />
       {!input ? (
@@ -65,6 +69,22 @@ const Home = () => {
         ))}
       </div>
       {/* Cards send */}
+
+      <div
+        className={`w-full md:w-[40vw] h-[100%] fixed top-0 right-0 bg-white shadow-xl transition-all duration-500 p-6 ${showCart ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <header className="w-[100%] flex justify-between items-center">
+          <span className="text-orange-400 text-[18px] font-semibold">
+            Order items..
+          </span>
+          <RxCross2
+            className="w-[30px] h-[30px] text-orange-400 text-[18px] font-semibold cursor-pointer hover:text-gray-600"
+            onClick={() => setShowCart(false)}
+          />
+        </header>
+        <Card2 /> // Work in progress: card module.
+        {/* <Card2 /> isse avi yaha se remove kr alag le jayege..., */}
+      </div>
     </div>
   );
 };
